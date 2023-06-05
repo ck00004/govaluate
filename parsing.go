@@ -388,6 +388,18 @@ func optimizeTokens(tokens []ExpressionToken) ([]ExpressionToken, error) {
 // 为了防止 govaluate 解析错误，需要对特殊字符进行转义
 func ReplaceSpecialChar(rule string) string {
 	rule = strings.ReplaceAll(rule, "\\", "\\\\")
+	rule = strings.ReplaceAll(rule, ".", "\\.")
+	rule = strings.ReplaceAll(rule, "*", "\\*")
+	rule = strings.ReplaceAll(rule, "+", "\\+")
+	rule = strings.ReplaceAll(rule, "?", "\\?")
+	rule = strings.ReplaceAll(rule, "^", "\\^")
+	rule = strings.ReplaceAll(rule, "$", "\\$")
+	rule = strings.ReplaceAll(rule, "[", "\\[")
+	rule = strings.ReplaceAll(rule, "]", "\\]")
+	rule = strings.ReplaceAll(rule, "{", "\\{")
+	rule = strings.ReplaceAll(rule, "}", "\\}")
+	rule = strings.ReplaceAll(rule, "|", "\\|")
+	rule = strings.ReplaceAll(rule, ":", "\\:")
 	rule = strings.ReplaceAll(rule, "(", "\\(")
 	rule = strings.ReplaceAll(rule, ")", "\\)")
 	return rule
