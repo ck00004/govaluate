@@ -372,7 +372,8 @@ func optimizeTokens(tokens []ExpressionToken) ([]ExpressionToken, error) {
 		if token.Kind == STRING {
 
 			token.Kind = PATTERN
-			token.Value, err = regexp.Compile(token.Value.(string))
+			// 在转换时将表达式内部的(转换为\\(
+			token.Value, err = regexp.Compile(ReplaceSpecialChar(token.Value.(string)))
 
 			if err != nil {
 				return tokens, err
@@ -382,6 +383,13 @@ func optimizeTokens(tokens []ExpressionToken) ([]ExpressionToken, error) {
 		}
 	}
 	return tokens, nil
+}
+
+// 为了防止 govaluate 解析错误，需要对( )进行转译
+func ReplaceSpecialChar(rule string) string {
+	rule = strings.ReplaceAll(rule, "(", "\\(")
+	rule = strings.ReplaceAll(rule, ")", "\\)")
+	return rule
 }
 
 /*

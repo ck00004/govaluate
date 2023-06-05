@@ -89,49 +89,33 @@ func TestStructParameter(t *testing.T) {
 
 func TestStringREQParameter(test *testing.T) {
 	body := `
-	<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="chrome=1,IE=Edge"><meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><link rel="shortcut icon" href=/favicon64.ico><link rel=bookmark href=/favicon.ico><title></title><script>var qimoClientId = {};</script><link href=/static/css/app.b05347e037b15d3c5bc9e710d091e898.css rel=stylesheet></head><body><style>.prompt-head-div {
-		display:none;
-	}
-
-	#scrollWrapper1 {
-		position: absolute;
-		z-index: 1;
-		top: 50px;
-		bottom: 0px;
-		left: 0;
-		width: 100%;
-		overflow-x: hidden;
-	}
-
-	#scrollWrapper2 {
-		position: absolute;
-		z-index: 1;
-		top: 50px;
-		bottom: 0px;
-		left: 0;
-		width: 100%;
-		overflow-x: hidden;
-	}
-	.ie-scroll {
-			-ms-scroll-chaining: chained;
-			-ms-overflow-style: none;
-			-ms-content-zooming: zoom;
-			-ms-scroll-rails: none;
-			-ms-content-zoom-limit-min: 100%;
-			-ms-content-zoom-limit-max: 500%;
-			-ms-scroll-snap-type: proximity;
-			-ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
-			-ms-overflow-style: none;
-			overflow: auto;
-	}</style><!--[if IE]>
-	<style>
-		.prompt-head .prompt-head-div {
-			display: block;
+	<script language="javascript">
+	<!--
+		//var SysLan = window.navigator.userLanguage;   //鍙栧緱绯荤粺璇█銆?
+		var SysLan = window.navigator.language;
+		if (!SysLan) {
+			SysLan = window.navigator.browserLanguage;
 		}
-	</style>
-	<![endif]--><div id=app><div class=prompt-head><div class="fc tc Y_bg prompt-head-div"><span>当前浏览器版本过低，建议使用Chrome浏览器或火狐浏览器</span></div></div></div><link href=/static/css/oem.css rel=stylesheet><script type=text/javascript src=/static/js/manifest.bd94de543ed773a2148c.js></script><script type=text/javascript src=/static/js/vendor.f1b97617af95cb2cb67a.js></script><script type=text/javascript src=/static/js/app.013f8f85fba1b8e4f197.js></script></body></html>
+	if(SysLan == "zh-cn" || SysLan == "zh-CN")
+	{ 
+	location="index_cn.htm"
+	} 
+	else if(SysLan == "zh-tw")
+	{
+	location="index_tw.htm"
+	}
+	else
+	{
+	location="index_en.htm"
+	}
+	//-->
+	</script>
 	`
-	expString := "body=\"fc tc Y_bg prompt-head-div\""
+	//body = "hello(world"
+	body = strings.ToLower(body)
+	expString := strings.ToLower("(body=\"location=\\\"index_cn.htm\\\"\" && body=\"if(syslan == \\\"zh-cn\")")
+
+	//expString := "body=\"if\\\\(SysLan == \\\"zh-cn\""
 
 	expression, expressionerr := NewEvaluableExpression(expString)
 	if expressionerr != nil {
