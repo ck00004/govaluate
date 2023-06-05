@@ -89,31 +89,12 @@ func TestStructParameter(t *testing.T) {
 
 func TestStringREQParameter(test *testing.T) {
 	body := `
-	<script language="javascript">
-	<!--
-		//var SysLan = window.navigator.userLanguage;   //鍙栧緱绯荤粺璇█銆?
-		var SysLan = window.navigator.language;
-		if (!SysLan) {
-			SysLan = window.navigator.browserLanguage;
-		}
-	if(SysLan == "zh-cn" || SysLan == "zh-CN")
-	{ 
-	location="index_cn.htm"
-	} 
-	else if(SysLan == "zh-tw")
-	{
-	location="index_tw.htm"
-	}
-	else
-	{
-	location="index_en.htm"
-	}
-	//-->
-	</script>
+	<input type="hidden" name="SecEx">
+	<link href="images\hwem.css" rel="stylesheet">
 	`
 	//body = "hello(world"
 	body = strings.ToLower(body)
-	expString := strings.ToLower("(body=\"location=\\\"index_cn.htm\\\"\" && body=\"if(syslan == \\\"zh-cn\")")
+	expString := strings.ToLower("(body=\"type=\\\"hidden\\\" name=\\\"SecEx\\\"\" \u0026\u0026 body=\"href=\\\"images\\\\hwem.css\\\"\")")
 
 	//expString := "body=\"if\\\\(SysLan == \\\"zh-cn\""
 
@@ -124,6 +105,8 @@ func TestStringREQParameter(test *testing.T) {
 
 	paramters := make(map[string]interface{})
 	paramters["body"] = body
+	paramters["protocol"] = "http"
+	paramters["banner"] = ""
 	result, err := expression.Evaluate(paramters)
 	if err != nil {
 		test.Errorf("Expected no error, but have %s", err)
