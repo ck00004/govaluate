@@ -154,6 +154,7 @@ var comparatorSymbols = map[string]OperatorSymbol{
 	"<":  LT,
 	"<=": LTE,
 	"=~": REQ,
+	"=":  REQ, // 为新版goby指纹写的转换
 	"!~": NREQ,
 	"in": IN,
 }
