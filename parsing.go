@@ -40,6 +40,14 @@ func parseTokens(expression string, functions map[string]ExpressionFunction) ([]
 			return ret, err
 		}
 
+		// 这里加个判断当 token.Kind == VARIABLE 时，读取ret的最后一个token，如果是COMPARATOR，那么就把当前token的Kind设置为STRING
+		if token.Kind == VARIABLE {
+			if len(ret) > 0 {
+				if ret[len(ret)-1].Kind == COMPARATOR {
+					token.Kind = STRING
+				}
+			}
+		}
 		// append this valid token
 		ret = append(ret, token)
 	}

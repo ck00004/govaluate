@@ -94,7 +94,7 @@ func TestStringREQParameter(test *testing.T) {
 	`
 	//body = "hello(world"
 	body = strings.ToLower(body)
-	expString := strings.ToLower("(body=\"type=\\\"hidden\\\" name=\\\"SecEx\\\"\" \u0026\u0026 body=\"href=\\\"images\\\\hwem.css\\\"\")")
+	expString := strings.ToLower("protocol=icmp")
 
 	//expString := "body=\"if\\\\(SysLan == \\\"zh-cn\""
 
@@ -105,7 +105,7 @@ func TestStringREQParameter(test *testing.T) {
 
 	paramters := make(map[string]interface{})
 	paramters["body"] = body
-	paramters["protocol"] = "http"
+	paramters["protocol"] = "icmp"
 	paramters["banner"] = ""
 	result, err := expression.Evaluate(paramters)
 	if err != nil {
